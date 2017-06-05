@@ -1,0 +1,35 @@
+version: '2'
+
+services:
+   db:
+     image: mysql:5.7
+     volumes:
+       - db_data:/var/lib/mysql
+     environment:
+       MYSQL_ROOT_PASSWORD: asecurepassword
+       MYSQL_DATABASE: wordpress
+       MYSQL_USER: wordpress
+       MYSQL_PASSWORD: anothersecurepassword
+
+   wordpress:
+     links:
+       - db:mysql
+     image: wordpress:latest
+     expose:
+#       - "80"
+        - "443"
+     environment:
+       WORDPRESS_DB_HOST: db:3306
+       WORDPRESS_DB_USER: wordpress
+       WORDPRESS_DB_PASSWORD: samepasswordasMYQL_PASSWORD
+       VIRTUAL_HOST: myawesomedomain.com,www.myawesomedomain.com
+       LETSENCRYPT_HOST: myawesomedomain.com,www.myawesomedomain.com
+       LETSENCRYPT_EMAIL: my.email@some-host.com
+
+volumes:
+    db_data:
+
+networks:
+  default:
+    external:
+      name: nginx-proxy
