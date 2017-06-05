@@ -1,0 +1,33 @@
+version: '2'
+
+services:
+  gogs-db:
+    image: mariadb
+    container_name: gogs-db
+    expose:
+      - "3306"
+    volumes:
+      - /PATH/TO/MSQL/DATA/VOLUME:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ASECUREPASSWORD
+      MYSQL_DATABASE: gogs
+  
+  gogs:
+    image: gogs/gogs
+    container_name: gogs
+    expose:
+      - "22"
+      - "443"
+      - "3000"
+    volumes:
+      - /PATH/TO/GOGS/DATA/VOLUME:/data:rw
+    environment:
+      VIRTUAL_HOST: yourdomainhere.com
+      VIRTUAL_PORT: 3000
+      LETSENCRYPT_HOST: yourdomainhere.com
+      LETSENCRYPT_EMAIL: you@some-email-host.com
+      
+networks:
+  default:
+    external:
+      name: nginx-proxy
