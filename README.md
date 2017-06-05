@@ -5,7 +5,12 @@ This is my setup for [jwilder's `nginx-proxy`](https://github.com/jwilder/nginx-
     * WordPress
     * Gogs
 
-This repo is meant to show simple examples of how to quickly use the reverse proxy and deploy your own websites in minutes.
+This repo is meant to show simple examples of how to quickly use the reverse proxy and deploy your own websites in minutes. In most use cases, all you need to do is `cd` to one of the example folders and:
+
+1. Edit the `docker-compose.yml` files, substituting placeholders for passwords, emails, domain names, etc.
+1. Run `docker compose up -d`
+
+For full details on the reverse proxy and all available options, see the [original repo](https://github.com/jwilder/nginx-proxy).
 
 ## Requirements
 
