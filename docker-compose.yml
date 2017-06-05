@@ -1,14 +1,57 @@
 version: '2'
+
 services:
-  nginx-proxy:
-    image: jwilder/nginx-proxy
-    container_name: nginx-proxy
+  nginx:
+    image: nginx
+    container_name: nginx
+    restart: always
     ports:
       - "80:80"
+      - "443:443"
+    volumes:
+      - /etc/nginx/conf.d
+      - /etc/nginx/vhost.d
+      - /usr/share/nginx/html
+      - /PATH/TO/CERTS:/etc/nginx/certs:ro
+
+  dockergen:
+    image: jwilder/docker-gen
+    container_name: dockergen
+    restart: always
+    command: -notify-sighup nginx -watch /etc/docker-gen/templates/nginx.tmpl /etc/nginx/conf.d/default.conf
+    volumes_from:
+      - nginx
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
-
-  whoami:
-    image: jwilder/whoami
+      - ./nginx.tmpl:/etc/docker-gen/templates/nginx.tmpl:ro
     environment:
-      - VIRTUAL_HOST=whoami.local
+      DEFAULT_HOST: default-host
+
+
+  nginx-letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    restart: always
+#    environment:
+#      ACME_CA_URI: https://acme-staging.api.letsencrypt.org/directory
+    container_name: nginx-letsencrypt
+    volumes_from:
+      - nginx
+    volumes:
+      - /PATH/TO/CERTS:/etc/nginx/certs:rw
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+  default-host:
+    build:
+      context: .
+      dockerfile: Dockerfile_default-host
+    container_name: nginx-proxy-default-host
+    expose:
+      - "80"
+    restart: always
+    environment:
+      VIRTUAL_HOST: default-host
+
+networks:
+  default:
+    external:
+      name: nginx-proxy

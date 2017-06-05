@@ -1,0 +1,6 @@
+# Set the base image to Ubuntu
+FROM php:7.0-apache
+
+
+# Add default resources
+COPY ./html /var/www/html/
