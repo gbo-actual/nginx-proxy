@@ -9,6 +9,16 @@ This repo is meant to show simple examples of how to quickly use the reverse pro
 
 For full details on the reverse proxy and all available options, see the [original repo](https://github.com/jwilder/nginx-proxy).
 
+## What Does This Do?
+
+A reverse proxy is a proxy server that takes requests and forwards them to other servers. Some of their uses include:
+
+* Allowing internal servers to serve requests from the Internet behind a firewall or other network isolation
+* Serving requests to multiple domains (eg. mydomain01.com and mydomain02.com) using a single server
+* Load balancing between servers
+
+We will be doing the 2nd use case, allowing you to serve multiple websites on a single server!
+
 ## Requirements
 
 1. A remote server hosted somewhere, eg. Digital Ocean, AWS, etc.
