@@ -44,14 +44,14 @@ We will be doing the 2nd use case, allowing you to serve multiple websites on a 
 1. Start the reverse proxy in this directory
     
     ```
-    docker compose up -d
+    docker-compose up -d
     ```
     Omit the `-d` if you want it to run in the foreground (and see console output), hit `Ctrl-C` to stop the proxy service
 
 If running for the first time/with an empty certs directory, it may take a few minutes to generate Diffie-Helman parameters. You can run it for the first time in the foreground to see when it completes:
 
 ```
-docker compose up
+docker-compose up
 ```
 
 This process will not be repeated on subsequent runs or until you clear out the `dhparam.pem` file (for whatever reason).
@@ -65,7 +65,7 @@ This process will not be repeated on subsequent runs or until you clear out the 
     ```
     
 1. Edit the `docker-compose.yml` file, subsituting placeholders for domains, passwords, emails, etc.
-1. Run `docker compose up -d` to run the container.
+1. Run `docker-compose up -d` to run the container.
 
 ### Stopping Services
 
@@ -75,7 +75,7 @@ This process will not be repeated on subsequent runs or until you clear out the 
     cd examples/wordpress
     ```
     
-1. Run `docker compose down`
+1. Run `docker-compose down`
     * Add `--volumes` at the end to remove volumes not mounted on the host
 
 More instructions coming soon.
