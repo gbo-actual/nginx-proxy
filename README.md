@@ -29,12 +29,18 @@ We will be doing the 2nd use case, allowing you to serve multiple websites on a 
 ## Usage
 
 1. Set up your server, preferably with SSH login and a non-root user account
-1. Install git, Docker and Docker Compose
+1. Install git, Docker, and Docker Compose
 1. Do some of the [Docker  tutorials](https://docs.docker.com/engine/tutorials/) to get familiar with the concepts
 1. Clone this repo to your server:
     
     ```
     git clone https://github.com/gbo-actual/nginx-proxy.git
+    ```
+
+1. Create a network in Docker:
+
+    ```
+    docker network create nginx-proxy
     ```
 
 ### Starting The Reverse Proxy
