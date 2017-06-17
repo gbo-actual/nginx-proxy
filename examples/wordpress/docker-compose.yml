@@ -4,7 +4,7 @@ services:
    db:
      image: mysql:5.7
      volumes:
-       - db_data:/var/lib/mysql
+       - db-data:/var/lib/mysql
      environment:
        MYSQL_ROOT_PASSWORD: asecurepassword
        MYSQL_DATABASE: wordpress
@@ -15,9 +15,13 @@ services:
      links:
        - db:mysql
      image: wordpress:latest
+     depends_on:
+       - db
+     volumes:
+       - wp-data:/var/www/html
      expose:
-#       - "80"
-        - "443"
+       - "80"
+       - "443"
      environment:
        WORDPRESS_DB_HOST: db:3306
        WORDPRESS_DB_USER: wordpress
@@ -27,7 +31,8 @@ services:
        LETSENCRYPT_EMAIL: my.email@some-host.com
 
 volumes:
-    db_data:
+  wp-data:
+  db-data:
 
 networks:
   default:
