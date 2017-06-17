@@ -7,10 +7,12 @@ services:
     expose:
       - "3306"
     volumes:
-      - gogs-db:/var/lib/mysql
+      - db:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: ASECUREPASSWORD
       MYSQL_DATABASE: gogs
+      MYSQL_USER: gogs
+      MYSQL_PASSWORD: ANOTHERSECUREPASSWORD
   
   gogs:
     image: gogs/gogs
@@ -20,7 +22,7 @@ services:
       - "443"
       - "3000"
     volumes:
-      - gogs-data:/data:rw
+      - data:/data:rw
     environment:
       VIRTUAL_HOST: yourdomainhere.com
       VIRTUAL_PORT: 3000
@@ -28,8 +30,8 @@ services:
       LETSENCRYPT_EMAIL: you@some-email-host.com
 
 volumes:
-  gogs-db:
-  gogs-data:
+  db:
+  data:
 
 networks:
   default:
