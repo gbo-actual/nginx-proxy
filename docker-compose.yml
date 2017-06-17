@@ -9,9 +9,9 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - /etc/nginx/conf.d
-      - /etc/nginx/vhost.d
-      - /usr/share/nginx/html
+      - nginx-confd:/etc/nginx/conf.d
+      - nginx-vhostd:/etc/nginx/vhost.d
+      - nginx-html:/usr/share/nginx/html
       - /PATH/TO/CERTS:/etc/nginx/certs:ro
 
   dockergen:
@@ -50,6 +50,11 @@ services:
     restart: always
     environment:
       VIRTUAL_HOST: default-host
+
+volumes:
+  nginx-confd:
+  nginx-vhostd:
+  nginx-html:
 
 networks:
   default:
